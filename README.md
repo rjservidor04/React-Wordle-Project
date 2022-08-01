@@ -1,2 +1,2 @@
 # React-Wordle-Project
-My First Project Using React
+ 1st React Project
