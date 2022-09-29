@@ -10,14 +10,35 @@ const useWordle = (solution) => {
     //format a guess into array of letter objects
     //e.g. [{key : 'a', color : 'yellow'}]
     const formatGuess = () => {
-        console.log("Formatting the Guess = ", currentGuess)
+        let solutionArray = [...solution]
+        let formattedGuess = [...currentGuess].map((l) =>{
+            return {key: l, color: 'grey'}
+        })
+
+        //find any green letters
+        formattedGuess.forEach((l, i) => {
+            if(solutionArray[i] === l.key) {
+                formattedGuess[i].color = 'green'
+                solutionArray[i] = null
+            }
+        })
+
+        //find any yellow letters
+        formattedGuess.forEach((l, i) => {
+            if(solutionArray.includes(l.key) && l.color !== 'green') {
+                formattedGuess[i].color = 'yellow'
+                solutionArray[solutionArray.indexOf(l.key)] = null
+            }
+        })
+
+        return formattedGuess
     }
 
     //add a new guess to the guess state
     //update the isCorrect state if the guess is correct
     //add one to the turn state
     const addNewGuess = () => {
-
+        
     }
 
     //handle keyup event and track current guess
@@ -39,7 +60,8 @@ const useWordle = (solution) => {
                 return
             }
 
-            formatGuess()
+            const formatted = formatGuess()
+            console.log(formatted)
         }
         
         if (key === 'Backspace') {
